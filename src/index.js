@@ -5,27 +5,33 @@ const path = require('path');
 const hbs = require('hbs');
 
 // Pathing
-const js_path = path.join(__dirname, "../public");
+const publicPath = path.join(__dirname, "../public");
 const templatePath = path.join(__dirname, "../templates");
 const partialPath = path.join(templatePath, "partials");
 
 app.set('view engine', 'hbs');
 app.set("views", path.join(templatePath, "views"));
 hbs.registerPartials(partialPath);
-app.use(express.static(js_Path));
+app.use(express.static(publicPath));
+
+// Debugging View Resolution
+console.log("Views Path:", app.get("views"));
 
 // Routing
 app.get("/", (req, res) => {
-    res.render("index");
+    res.render("index"); // Update the render path
 });
 
 app.get("/about", (req, res) => {
     res.render("about");
 });
+app.get("/weather",(req,res)=>{
+    res.render("weather");
+})
 
 // Handling 404 - Page Not Found
 app.get("*", (req, res) => {
-    res.render("404"); // Assuming you have a "404.hbs" view for handling 404 errors
+    res.render("404found");
 });
 
 app.listen(port, () => {
